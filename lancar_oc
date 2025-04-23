@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Despacho de Guarnição</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+    form {
+      background-color: white;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #135ca4;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="despachoForm">
+    <h2>Despacho de Guarnição</h2>
+
+    <label for="dataHora">Data e Hora:</label>
+    <input type="datetime-local" id="dataHora" name="dataHora" required>
+
+    <label for="telefone">Telefone do Solicitante:</label>
+    <input type="tel" id="telefone" name="telefone" required placeholder="(00) 00000-0000">
+
+    <label for="nomeSolicitante">Nome do Solicitante:</label>
+    <input type="text" id="nomeSolicitante" name="nomeSolicitante" required>
+
+    <label for="tipoOcorrencia">Tipo de Ocorrência:</label>
+    <input type="text" id="tipoOcorrencia" name="tipoOcorrencia" required>
+
+    <label for="descricao">Descrição da Ocorrência:</label>
+    <textarea id="descricao" name="descricao" rows="4" required></textarea>
+
+    <button type="submit">Registrar Despacho</button>
+  </form>
+
+  <script>
+    document.getElementById("despachoForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const formData = {
+        dataHora: document.getElementById("dataHora").value,
+        telefone: document.getElementById("telefone").value,
+        nomeSolicitante: document.getElementById("nomeSolicitante").value,
+        tipoOcorrencia: document.getElementById("tipoOcorrencia").value,
+        descricao: document.getElementById("descricao").value
+      };
+
+      // Substitua abaixo pela URL da sua Web App do Google Apps Script
+      const url = "https://script.google.com/macros/s/SEU_SCRIPT_ID/exec";
+
+      fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      }).then(() => {
+        alert("Despacho registrado com sucesso!");
+        document.getElementById("despachoForm").reset();
+      }).catch((err) => {
+        alert("Erro ao registrar: " + err.message);
+      });
+    });
+  </script>
+
+</body>
+</html>
